@@ -1,0 +1,169 @@
+@layer reset, default, layouts, utilities;
+
+@layer reset {
+	* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+        text-box-trim: trim-both;
+		text-wrap: pretty;
+	}
+	h1, h2, h3, h4, h5, h6 {
+		font-size: inherit;
+		font-weight: inherit;
+	}
+	a {
+		color: inherit;
+	}
+    button {
+		cursor: pointer;
+    }
+	button, input, select {
+		font: inherit;
+		color: inherit;
+		letter-spacing: inherit;
+        background: unset;
+	}
+	input, progress, meter {
+		accent-color: currentColor;
+	}
+	select {
+		field-sizing: content;
+	}
+	menu, ol, ul {
+		list-style: none;
+	}
+	hr {
+		border: none;
+		border-top: 1px solid currentColor;
+		width: 100%;
+	}
+	table {
+		text-indent: 0;
+		border-color: inherit;
+		border-collapse: collapse;
+	}
+	svg {
+		paint-order: stroke fill;
+	}
+	audio, canvas, embed, iframe, img, object, svg, video {
+		display: block;
+	}
+}
+
+@layer default {
+	:root {
+		--phi: calc((1 + sqrt(5)) / 2);
+		--m: 1rem;
+		--xxs: calc(var(--m) * pow(var(--phi), -3));
+		--xs: calc(var(--m) * pow(var(--phi), -2));
+		--s: calc(var(--m) * pow(var(--phi), -1));
+		--l: calc(var(--m) * pow(var(--phi), 1));
+		--xl: calc(var(--m) * pow(var(--phi), 2));
+		--xxl: calc(var(--m) * pow(var(--phi), 3));
+	}
+	html {
+        font-size: var(--m);
+		line-height: var(--l);
+	}
+}
+
+@layer layouts {
+	/* center shit */
+	.gc {
+		display: grid;
+		> * {
+			place-self: center;
+		}
+    }
+	
+	/* stack shit */
+    .gz {
+		display: grid;
+		> * {
+			grid-area: 1/1;
+		}
+    }
+	
+	/* stretch shit */
+	.gs {
+		display: grid;
+		> * {
+			justify-self: stretch;
+		}
+	}
+	/* .gs {
+		display: grid;
+		align-content: stretch;
+		place-items: stretch;
+	} */
+
+    /* it's dangerous to go alone, take this */
+    .gq {
+        container-type: inline-size;
+    }
+
+	/* golden grids */
+	.gg01 {
+        display: grid;
+        grid-template-columns: 1fr 1.618fr;
+        grid-template-rows: 1fr;
+    }
+	@container (max-width: 575px) {
+        .gg01 {
+            display: grid;
+			grid-template-rows: 1fr 1.618fr;
+			grid-template-columns: 1fr;
+		}
+	}
+    .gg10 {
+        display: grid;
+        grid-template-columns: 1.618fr 1fr;
+        grid-template-rows: 1fr;
+    }
+
+	@container (max-width: 575px) {
+        .gg10 {
+            display: grid;
+			grid-template-rows: 1.618fr 1fr;
+			grid-template-columns: 1fr;
+		}
+	}
+}
+
+@layer utilities {
+	.fs {
+		width: 100dvi;
+		height: 100dvb;
+	}
+
+	@container (min-width: 576px) {
+		.gw {
+			width: 61.8cqi;
+		}
+	}
+
+	/* padding utilities */
+	.gp-xs { padding: var(--xs); }
+	.gp-s  { padding: var(--s); }
+	.gp-m  { padding: var(--m); }
+	.gp-l  { padding: var(--l); }
+	.gp-xl { padding: var(--xl); }
+	.gp-xxl { padding: var(--xxl); }
+
+	/* margin utilities */
+	.gm-xs { margin: var(--xs); }
+	.gm-s  { margin: var(--s); }
+	.gm-m  { margin: var(--m); }
+	.gm-l  { margin: var(--l); }
+	.gm-xl { margin: var(--xl); }
+	.gm-xxl { margin: var(--xxl); }
+
+	/* text size utilities */
+	.gt-xs { font-size: var(--xs); }
+	.gt-s  { font-size: var(--s); }
+	.gt-m  { font-size: var(--m); }
+	.gt-l  { font-size: var(--l); }
+	.gt-xl { font-size: var(--xl); }
+	.gt-xxl { font-size: var(--xxl); }
+}

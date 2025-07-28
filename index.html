@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="icon" type="image/png" href="static/img/marc.png">
+    <script type="module" src="static/js/datastar.js"></script>
+    <title>Water Marc</title>
+</head>
+<body>
+    <main id="main">
+        <div id="home" class="fs gc" data-signals-photo="">
+            <img src="/static/img/marc.png">
+            <h1 class="gt-xl">Water Marc</h1>
+            <p>Watermark your documents for free!</p>
+            <input 
+            data-bind-photo
+            type="file" class="gp-xs"></input>
+            <p class="gt-s">Accepted formats: .png, .jpg, .pdf</p>
+            <div data-effect="@post('/test')"></div>
+        </div>
+    </main>
+</body>
+</html>
