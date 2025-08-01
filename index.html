@@ -14,11 +14,12 @@
             <img src="/static/img/marc.png">
             <h1 class="gt-xl">Water Marc</h1>
             <p>Watermark your documents for free!</p>
-            <input 
+            <input
+            id="home-input"
             data-bind-photo
+            data-on-change="setTimeout(() => @post('/send'), 10)"
             type="file" class="gp-xs"></input>
-            <p class="gt-s">Accepted formats: .png, .jpg, .pdf</p>
-            <div data-effect="@post('/test')"></div>
+            <p class="gt-s">Accepted formats: .png, .jpeg</p>
         </div>
     </main>
 </body>
