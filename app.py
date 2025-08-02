@@ -87,7 +87,8 @@ async def create_watermarked_image(photo_path, text, stroke, font_size, color, r
     image = Image.open(photo_path).convert('RGBA')
     width, height = image.size
     watermark_layer = Image.new('RGBA', (width, height), (0, 0, 0, 0))
-    font = ImageFont.truetype("arial.ttf", int(font_size[:-2]) * 20)
+    font_path = "static/fonts/SombongAmat-m2G82.ttf"
+    font = ImageFont.truetype(font_path, int(font_size[:-2]) * 20)
     bbox = font.getbbox(text)
     textwidth, textheight = bbox[2] - bbox[0], bbox[3] - bbox[1]
     text_img = Image.new('RGBA', (textwidth, textheight), (0, 0, 0, 0))
