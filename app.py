@@ -1,4 +1,4 @@
-from sanic import Sanic
+from sanic import Sanic, exceptions
 from datastar_py.sanic import read_signals, datastar_respond, ServerSentEventGenerator as SSE
 from sanic.response import file
 
@@ -13,7 +13,6 @@ app = Sanic("mark")
 app.static('/static/', './static/')
 app.static('/photos/', './photos/', name="photos")
 app.static("/", "index.html", name="index")
-app.static("/editor", "editor.html", name="editor")
 
 # VIEWS
 
@@ -116,13 +115,12 @@ async def cookie(request, response):
         user_id = uuid.uuid4().hex
         response.add_cookie('user_id', user_id)
 
-# @datastar_response
 @app.post('/send')
 async def send(request):
     response = await datastar_respond(request)
     await response.send(SSE.patch_elements("<p id='home-input'>Processing file...</p>"))
     signals = await read_signals(request)
-    # print(signals)
+    print(signals)
     photo_names = signals.get('photoNames', [])
     photo_mimes = signals.get('photoMimes', [])
     photo_datas = signals.get('photo', [])
@@ -160,11 +158,15 @@ async def download(request):
     await response.send(SSE.patch_elements(
         f'''<button id="dl_button" class="gp-s gm-l"><a href='{download_url}' download>Download your watermarked image</a></button>'''
         ))
-    # await asyncio.sleep(3)
-    # await response.send(SSE.execute_script("dl_button.firstChild.click()"))
+    await asyncio.sleep(3)
+    await response.send(SSE.execute_script("dl_button.firstChild.click()"))
 
 
 @app.get('/download/file/<filename>')
 async def download_file(request, filename):
-    file_path = app.ctx.cwd / 'photos' / filename
-    return await file(file_path, filename=filename, mime_type='image/png')
+    if request.cookies.get('user_id') in filename:
+        file_path = app.ctx.cwd / 'photos' / filename
+        mime_type = "image/png" if filename.endswith(".png") else "image/jpeg"
+        return await file(file_path, filename=filename, mime_type=mime_type)
+    else:
+        raise exceptions.Forbidden()
